@@ -39,11 +39,12 @@
         
         if (badgeValue.length > 0) {
             frame.size = CGSizeMake(16, 16);
-        }else if (badgeValue.length > 1) {
+        }else if (badgeValue.length > 0) {
             //文字尺寸
             NSDictionary *attributes = @{NSFontAttributeName : self.font};
             CGSize badgeSize = [badgeValue sizeWithAttributes:attributes];
-            frame.size.width = badgeSize.width + 7;
+            frame.size.height = 16;
+            frame.size.width = MAX(badgeSize.width + 7, 16);
         }else if(badgeValue.length == 0) {
             frame.size = CGSizeMake(6, 6);
         }

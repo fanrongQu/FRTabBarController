@@ -67,6 +67,7 @@
  */
 - (void)itemClick:(FRTabBarItem *)item
 {
+    if (![self.dataSource tabBarItemCanSelectedBarItem:item.tag]) return;
     //如果需要点击刷新则不加判断
     if (self.selectedItem != item) {
         

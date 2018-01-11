@@ -9,7 +9,7 @@
 
 #import "FRTabBarController.h"
 
-@interface FRTabBarController ()<FRTabBarDelegate>
+@interface FRTabBarController ()<FRTabBarDataSource,FRTabBarDelegate>
 
 @end
 
@@ -30,15 +30,10 @@
 - (void)setupTabbar
 {
     FRTabBar *customTabBar = [[FRTabBar alloc] initWithFrame:self.tabBar.bounds];
+    customTabBar.dataSource = self;
     customTabBar.delegate = self;
     [self.tabBar addSubview:customTabBar];
     self.customTabBar = customTabBar;
-}
-
-#pragma mark - FRTabBar Delegate
-- (void)tabBar:(FRTabBar *)tabBar didSelectedButtonFrom:(NSInteger)from to:(NSInteger)to
-{
-    self.selectedIndex = to;
 }
 
 - (void)setTabBarItemNormalColor:(UIColor *)normalColor selectedColor:(UIColor *)selectedColor {
@@ -77,6 +72,15 @@
     [self addChildViewController:childViewController];
     // 3.添加tabbar内部的按钮
     [self.customTabBar addTabBarItemWithItem:childViewController.tabBarItem];
+}
+
+#pragma mark - FRTabBar dataSource
+- (BOOL)tabBarItemCanSelectedBarItem:(NSInteger)integer {
+    return YES;
+}
+#pragma mark - FRTabBar Delegate
+- (void)tabBar:(FRTabBar *)tabBar didSelectedButtonFrom:(NSInteger)from to:(NSInteger)to {
+    self.selectedIndex = to;
 }
 
 - (void)viewWillAppear:(BOOL)animated
